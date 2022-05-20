@@ -1,0 +1,12 @@
+syntax = "proto3";
+package chat;
+
+option go_package = "github.com/glovenkevin/golang-konkurensi/pb/chat;chat";
+
+import "chat/request.proto";
+import "chat/response.proto";
+
+service ChatService {
+    rpc ReplyMessage(HelloRequest) returns (HelloResponse) {}
+    rpc CheckMyData(CheckMyDataRequest) returns (CheckMyDataResponse) {}
+}

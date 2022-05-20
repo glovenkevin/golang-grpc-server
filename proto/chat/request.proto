@@ -1,0 +1,15 @@
+syntax = "proto3";
+package chat;
+
+option go_package = "github.com/glovenkevin/golang-konkurensi/pb/chat;chat";
+
+message HelloRequest {
+	string name = 1;
+}
+
+message CheckMyDataRequest {
+	string name = 1;
+	int32 age = 2;
+	double height = 3;
+	bool is_married = 4;
+}
