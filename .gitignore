@@ -2,3 +2,5 @@ pb
 go.mod
 go.sum
 .vscode
+
+config.toml

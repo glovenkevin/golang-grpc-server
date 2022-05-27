@@ -1,0 +1,57 @@
+version: "3"
+
+x-mongo-cluster: &mongo-cluster
+  expose:
+    - "27017"
+  environment:
+    MONGO_INITDB_ROOT_USERNAME: root
+    MONGO_INITDB_ROOT_PASSWORD: password
+  networks:
+    - mongo-cluster
+  command: 
+    - mongod
+    - --replSet
+    - rs-mongo
+    - --bind_ip_all
+    - --enableMajorityReadConcern
+    - "false"
+    - --keyFile
+    - "/data/file.key"
+
+services:
+  mongo:
+    image: mongo:4.2.11
+    container_name: mongo
+    expose:
+      - "27017"
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongodb:/data/db
+      - ./key/mongo.key:/data/file.key
+    <<: *mongo-cluster
+
+  mongo-c1:
+    image: mongo:4.2.11
+    container_name: mongo-c1
+    volumes:
+      - ./mongo-c1:/data/db
+      - ./key/mongo.key:/data/file.key
+    <<: *mongo-cluster
+    ports:
+      - "27018:27017"
+    
+  mongo-c2:
+    image: mongo:4.2.11
+    container_name: mongo-c2
+    volumes:
+      - ./mongo-c2:/data/db
+      - ./key/mongo.key:/data/file.key
+    <<: *mongo-cluster
+    ports:
+      - "27019:27017"
+
+networks:
+  mongo-cluster:
+   external: true
+   name: mongo-cluster

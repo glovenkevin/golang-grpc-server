@@ -1,0 +1,6 @@
+[grpc]
+tcp_port=":8080"
+
+[mongodb]
+uri="mongodb://root:password@localhost:27017/?tls=false"
+db="test"

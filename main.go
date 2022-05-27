@@ -2,36 +2,18 @@ package main
 
 import (
 	"log"
-	"net"
-	"os"
 
-	chat_handler "grpc-client/chat"
-	chat "grpc-client/pb/chat"
-
-	"google.golang.org/grpc"
+	"grpc-client/setup"
 )
 
 func main() {
-	log := log.New(os.Stdout, "grpc skeleton : ", log.LstdFlags|log.Lmicroseconds|log.Lshortfile)
-	log.Println("Starting server...")
 
-	listen, err := net.Listen("tcp", ":8080")
+	err := setup.Load()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("Failed to start: %v", err)
 	}
 
-	srv := grpc.NewServer()
-	grpcRoute(srv, log)
-
-	defer srv.GracefulStop()
-
-	if err = srv.Serve(listen); err != nil {
-		log.Fatalf("failed to serve: %s", err)
-		return
+	if err := setup.Start(); err != nil {
+		log.Fatalf("Failed to start: %v", err)
 	}
-}
-
-func grpcRoute(srv *grpc.Server, log *log.Logger) {
-	handler := chat_handler.NewChatHandler(log)
-	chat.RegisterChatServiceServer(srv, handler)
 }
