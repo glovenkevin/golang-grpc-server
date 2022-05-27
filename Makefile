@@ -27,4 +27,4 @@ mongo-gen-key:
 	mv file.key ./key/file.key
 
 mongo-cluster-init:
-	docker-compose exec mongo mongo -u root -p password --eval "rs.initiate({_id: 'mongo-cluster', members: [{_id: 0, host: 'mongo:27017'}, {_id: 1, host: 'mongo-c1:27018'}, {_id: 1, host: 'mongo-c2:27019'}]});"
+	docker-compose exec mongo mongo -u root -p password --eval "rs.initiate({_id: 'rs-mongo', members: [{_id: 0, host: 'mongo:27017'}, {_id: 1, host: 'mongo-c1:27018'}, {_id: 1, host: 'mongo-c2:27019'}]});"
